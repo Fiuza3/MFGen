@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 
 import { Logo } from "@/identidade/Logo";
-import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
+import { useEstadoGerador } from "@/compartilhado/hooks/useEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
 import { BotaoExportar } from "@/recursos/exportador/componentes/BotaoExportar";
 import { SeletorTemplate } from "@/recursos/galeria/componentes/SeletorTemplate";
@@ -15,7 +15,7 @@ import { obterTemplate, obterTemplatePadrao } from "@/templates/registro";
 
 export default function PaginaGerador() {
   const templatePadrao = obterTemplatePadrao();
-  const estado = usarEstadoGerador(templatePadrao?.meta.id ?? "");
+  const estado = useEstadoGerador(templatePadrao?.meta.id ?? "");
   const Componente =
     (obterTemplate(estado.idTemplate) ?? templatePadrao)?.Componente;
 

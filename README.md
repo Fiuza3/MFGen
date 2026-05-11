@@ -65,7 +65,7 @@ src/
 │
 └── compartilhado/          # UI/hooks/utils genéricos
     └── hooks/
-        └── usarEstadoGerador.ts   # Estado central do app
+        └── useEstadoGerador.ts    # Estado central do app
 ```
 
 ### Por que essa estrutura
@@ -87,8 +87,8 @@ Escolhi **feature-first** com um **núcleo de identidade** separado.
   extra. KISS — mantenha simples enquanto for simples.
 
 A linguagem do código é portuguesa onde faz sentido humano (`recursos/`,
-`identidade/`, `usarEstadoGerador`), e mantém o inglês quando é convenção
-estabelecida (`useState`, `React`, `props`).
+`identidade/`, `dimensao`, `conteudo`), e mantém o inglês quando é
+convenção estabelecida (`useState`, `useEstadoGerador`, `props`).
 
 ## Stack
 

@@ -24,7 +24,7 @@ export type EstadoGerador = {
   atualizarConteudo: (parcial: Partial<Conteudo>) => void;
 };
 
-export function usarEstadoGerador(idTemplateInicial: string): EstadoGerador {
+export function useEstadoGerador(idTemplateInicial: string): EstadoGerador {
   const [idTemplate, setIdTemplate] = useState(idTemplateInicial);
   const [idProporcao, setIdProporcao] = useState<IdProporcao>(
     PROPORCAO_PADRAO.id,

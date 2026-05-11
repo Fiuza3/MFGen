@@ -1,10 +1,7 @@
 import type { Dimensao } from "@/recursos/proporcao/tipos";
 
-/**
- * Calcula o fator de escala visual para fazer um canvas de tamanho real
- * caber dentro do espaço disponível, preservando a proporção. O valor é
- * limitado em 1 — nunca aumentamos visualmente, só reduzimos.
- */
+// Cap em 1: nunca amplia o preview, só reduz quando o canvas real é
+// maior que o espaço disponível.
 export function calcularEscala(
   disponivel: { largura: number; altura: number },
   alvo: Dimensao,
@@ -15,8 +12,5 @@ export function calcularEscala(
   const larguraUtil = Math.max(0, disponivel.largura - margem * 2);
   const alturaUtil = Math.max(0, disponivel.altura - margem * 2);
 
-  const escalaPorLargura = larguraUtil / alvo.largura;
-  const escalaPorAltura = alturaUtil / alvo.altura;
-
-  return Math.min(1, escalaPorLargura, escalaPorAltura);
+  return Math.min(1, larguraUtil / alvo.largura, alturaUtil / alvo.altura);
 }

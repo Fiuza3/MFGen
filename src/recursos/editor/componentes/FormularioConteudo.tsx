@@ -9,12 +9,9 @@ type FormularioConteudoProps = {
   aoMudar: (parcial: Partial<Conteudo>) => void;
 };
 
-/**
- * Reúne os campos editáveis (tag, título, subtítulo). Sempre mostra
- * todos — os templates filtram o que realmente usam, mas manter o
- * formulário consistente evita que o usuário "perca" um campo ao
- * trocar de template.
- */
+// O formulário expõe todos os campos sempre. Os templates consomem só
+// o que precisam, mas trocar de template não pode apagar o que já foi
+// digitado — daí mantermos o conjunto completo no estado.
 export function FormularioConteudo({
   conteudo,
   aoMudar,

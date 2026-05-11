@@ -13,25 +13,17 @@ type CamposDimensaoCustomProps = {
   aoMudar: (dimensao: Dimensao) => void;
 };
 
-/**
- * Dois inputs numéricos lado a lado para largura e altura no modo custom.
- * Valores fora dos limites do catálogo são clampados antes de propagar.
- */
 export function CamposDimensaoCustom({
   dimensao,
   aoMudar,
 }: CamposDimensaoCustomProps) {
-  const aoEditar = (campo: keyof Dimensao) => (evento: ChangeEvent<HTMLInputElement>) => {
-    const bruto = Number(evento.target.value);
-    if (!Number.isFinite(bruto)) {
-      return;
-    }
-    const limitado = Math.min(
-      LIMITE_DIMENSAO_MAXIMA,
-      Math.max(LIMITE_DIMENSAO_MINIMA, Math.round(bruto)),
-    );
-    aoMudar({ ...dimensao, [campo]: limitado });
-  };
+  const aoEditar =
+    (campo: keyof Dimensao) =>
+    (evento: ChangeEvent<HTMLInputElement>) => {
+      const bruto = Number(evento.target.value);
+      if (!Number.isFinite(bruto)) return;
+      aoMudar({ ...dimensao, [campo]: clamparDimensao(bruto) });
+    };
 
   return (
     <div className="grid grid-cols-2 gap-2">
@@ -46,6 +38,13 @@ export function CamposDimensaoCustom({
         aoMudar={aoEditar("altura")}
       />
     </div>
+  );
+}
+
+function clamparDimensao(valor: number): number {
+  return Math.min(
+    LIMITE_DIMENSAO_MAXIMA,
+    Math.max(LIMITE_DIMENSAO_MINIMA, Math.round(valor)),
   );
 }
 

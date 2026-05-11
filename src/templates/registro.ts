@@ -8,11 +8,8 @@ import { Terminal } from "./terminal/Terminal";
 import { metaTerminal } from "./terminal/meta";
 import type { EntradaRegistro } from "./tipos";
 
-/**
- * Lista única de templates disponíveis no app. Para adicionar um novo
- * template, crie a pasta `src/templates/<id>/` com seu componente e
- * meta, e adicione a entrada aqui — nenhum outro arquivo precisa mudar.
- */
+// Único ponto que conhece o conjunto de templates disponíveis.
+// Adicionar um novo template é só uma linha aqui.
 export const templates: readonly EntradaRegistro[] = [
   { meta: metaTerminal, Componente: Terminal },
   { meta: metaCommit, Componente: CommitCard },

@@ -12,11 +12,9 @@ type CardMiniaturaProps = {
   aoSelecionar: (id: string) => void;
 };
 
-/**
- * Card da galeria com uma prévia do template em tamanho reduzido.
- * Renderiza o próprio componente em 1080×1080 e aplica scale para caber
- * no card — mantém uma única fonte da verdade para o visual.
- */
+// A miniatura usa o próprio componente do template e escala para caber
+// no card. Mantém uma única fonte da verdade para o visual em vez de
+// pintar miniaturas estáticas que descasariam ao mexer no template.
 export function CardMiniatura({
   entrada,
   ativo,

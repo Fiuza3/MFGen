@@ -20,11 +20,6 @@ type Estado =
 
 const DURACAO_MENSAGEM_SUCESSO_MS = 3500;
 
-/**
- * Aciona a captura do nó renderizado em dimensão real e dispara o
- * download do PNG. Devolve feedback inline: estado de exportação,
- * confirmação de sucesso (com nome do arquivo) e mensagens de erro.
- */
 export function BotaoExportar({
   refNo,
   dimensao,

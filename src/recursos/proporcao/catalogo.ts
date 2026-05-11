@@ -1,10 +1,5 @@
-import type { Dimensao, Proporcao } from "./tipos";
+import type { Proporcao } from "./tipos";
 
-/**
- * Proporções oferecidas no seletor, da mais comum para a menos comum.
- * Adicionar uma nova é só incluir um item — o seletor e o catálogo
- * derivam tudo daqui.
- */
 export const proporcoes: readonly Proporcao[] = [
   {
     id: "1-1",
@@ -40,22 +35,9 @@ export const proporcoes: readonly Proporcao[] = [
 
 export const PROPORCAO_PADRAO = proporcoes[0];
 
-/** Limites usados pelo modo custom para evitar dimensões fora do razoável. */
 export const LIMITE_DIMENSAO_MINIMA = 240;
 export const LIMITE_DIMENSAO_MAXIMA = 4096;
 
 export function encontrarProporcao(id: string): Proporcao | undefined {
   return proporcoes.find((p) => p.id === id);
-}
-
-export function dimensaoValida(dimensao: Dimensao): boolean {
-  const { largura, altura } = dimensao;
-  return (
-    Number.isFinite(largura) &&
-    Number.isFinite(altura) &&
-    largura >= LIMITE_DIMENSAO_MINIMA &&
-    altura >= LIMITE_DIMENSAO_MINIMA &&
-    largura <= LIMITE_DIMENSAO_MAXIMA &&
-    altura <= LIMITE_DIMENSAO_MAXIMA
-  );
 }

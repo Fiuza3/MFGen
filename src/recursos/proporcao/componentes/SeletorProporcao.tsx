@@ -8,10 +8,6 @@ type SeletorProporcaoProps = {
   aoSelecionar: (id: IdProporcao) => void;
 };
 
-/**
- * Mostra os presets de proporção como botões em grade e uma opção
- * extra "Custom" para entrar com dimensões livres.
- */
 export function SeletorProporcao({
   selecionado,
   aoSelecionar,

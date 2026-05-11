@@ -1,3 +1,5 @@
+import { CodeBlock } from "./code-block/CodeBlock";
+import { metaCodeBlock } from "./code-block/meta";
 import { CommitCard } from "./commit/CommitCard";
 import { metaCommit } from "./commit/meta";
 import { Tag } from "./tag/Tag";
@@ -15,6 +17,7 @@ export const templates: readonly EntradaRegistro[] = [
   { meta: metaTerminal, Componente: Terminal },
   { meta: metaCommit, Componente: CommitCard },
   { meta: metaTag, Componente: Tag },
+  { meta: metaCodeBlock, Componente: CodeBlock },
 ] as const;
 
 export function obterTemplate(id: string): EntradaRegistro | undefined {

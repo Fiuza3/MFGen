@@ -1,3 +1,5 @@
+import { Terminal } from "./terminal/Terminal";
+import { metaTerminal } from "./terminal/meta";
 import type { EntradaRegistro } from "./tipos";
 
 /**
@@ -6,7 +8,7 @@ import type { EntradaRegistro } from "./tipos";
  * meta, e adicione a entrada aqui — nenhum outro arquivo precisa mudar.
  */
 export const templates: readonly EntradaRegistro[] = [
-  // Preenchido pelos próximos commits, conforme cada template é criado.
+  { meta: metaTerminal, Componente: Terminal },
 ] as const;
 
 export function obterTemplate(id: string): EntradaRegistro | undefined {

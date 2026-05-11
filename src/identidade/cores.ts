@@ -1,7 +1,4 @@
-/**
- * Paleta da MF Desenvolvimento.
- * Mantenha em sincronia com os tokens declarados em src/app/globals.css.
- */
+// Espelhado em globals.css (--color-mf-*). Mudou aqui, muda lá.
 export const cores = {
   fundo: "#0A0A0B",
   superficie: "#111114",
@@ -20,5 +17,3 @@ export const cores = {
   alerta: "#F97316",
   erro: "#EF4444",
 } as const;
-
-export type ChaveCor = keyof typeof cores;

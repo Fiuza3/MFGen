@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { forwardRef, useLayoutEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 import type { Dimensao } from "@/recursos/proporcao/tipos";
 
@@ -18,49 +12,34 @@ type PalcoProps = {
   children: ReactNode;
 };
 
-/**
- * Mantém o template em tamanho real no DOM (importante para captura
- * fiel ao exportar) e aplica `transform: scale()` num wrapper para a
- * imagem caber visualmente no espaço disponível. O ref encaminhado
- * aponta para o nó interno sem transform, que é o que o exportador
- * deve capturar.
- */
+// O nó com `ref` fica em tamanho real (sem transform) para que o
+// exportador capture a imagem na resolução correta. O scale visual
+// vive num wrapper externo, só para o preview caber na tela.
 export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
   { dimensao, children },
   ref,
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [tamanhoContainer, setTamanhoContainer] = useState({
-    largura: 0,
-    altura: 0,
-  });
+  const [tamanho, setTamanho] = useState({ largura: 0, altura: 0 });
 
   useLayoutEffect(() => {
     const elemento = containerRef.current;
     if (!elemento) return;
 
-    const atualizar = () => {
-      const { clientWidth, clientHeight } = elemento;
-      setTamanhoContainer({ largura: clientWidth, altura: clientHeight });
+    const medir = () => {
+      setTamanho({
+        largura: elemento.clientWidth,
+        altura: elemento.clientHeight,
+      });
     };
 
-    atualizar();
-
-    const observador = new ResizeObserver(atualizar);
+    medir();
+    const observador = new ResizeObserver(medir);
     observador.observe(elemento);
     return () => observador.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setTamanhoContainer({
-        largura: containerRef.current.clientWidth,
-        altura: containerRef.current.clientHeight,
-      });
-    }
-  }, [dimensao.largura, dimensao.altura]);
-
-  const escala = calcularEscala(tamanhoContainer, dimensao);
+  const escala = calcularEscala(tamanho, dimensao);
 
   return (
     <div
@@ -79,8 +58,7 @@ export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
             transform: `scale(${escala})`,
             transformOrigin: "top left",
             position: "absolute",
-            top: 0,
-            left: 0,
+            inset: 0,
           }}
         >
           <div

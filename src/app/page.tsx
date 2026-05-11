@@ -21,9 +21,7 @@ import { obterTemplatePadrao, obterTemplate } from "@/templates/registro";
  */
 export default function PaginaGerador() {
   const templatePadrao = obterTemplatePadrao();
-  const estado = usarEstadoGerador({
-    idTemplateInicial: templatePadrao?.meta.id ?? "",
-  });
+  const estado = usarEstadoGerador(templatePadrao?.meta.id ?? "");
   const entradaAtual = obterTemplate(estado.idTemplate) ?? templatePadrao;
   const Componente = entradaAtual?.Componente;
 

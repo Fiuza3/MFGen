@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { CONTEUDO_INICIAL, type Conteudo } from "@/recursos/editor/tipos";
 import {
@@ -13,10 +13,6 @@ import {
   type IdProporcao,
 } from "@/recursos/proporcao/tipos";
 
-type EntradaUsarEstadoGerador = {
-  idTemplateInicial: string;
-};
-
 export type EstadoGerador = {
   idTemplate: string;
   idProporcao: IdProporcao;
@@ -28,18 +24,8 @@ export type EstadoGerador = {
   atualizarConteudo: (parcial: Partial<Conteudo>) => void;
 };
 
-/**
- * Estado central do gerador. Concentra template selecionado, dimensão da
- * imagem e conteúdo dos campos editáveis num único hook para evitar
- * prop-drilling entre as seções da página (galeria, editor, visualizador).
- *
- * Se um dia o app crescer (histórico, múltiplas imagens, persistência),
- * a troca para Zustand é trocar a implementação interna mantendo a API.
- */
-export function usarEstadoGerador({
-  idTemplateInicial,
-}: EntradaUsarEstadoGerador): EstadoGerador {
-  const [idTemplate, setIdTemplate] = useState<string>(idTemplateInicial);
+export function usarEstadoGerador(idTemplateInicial: string): EstadoGerador {
+  const [idTemplate, setIdTemplate] = useState(idTemplateInicial);
   const [idProporcao, setIdProporcao] = useState<IdProporcao>(
     PROPORCAO_PADRAO.id,
   );
@@ -48,49 +34,25 @@ export function usarEstadoGerador({
   );
   const [conteudo, setConteudo] = useState<Conteudo>(CONTEUDO_INICIAL);
 
-  const selecionarTemplate = useCallback((id: string) => {
-    setIdTemplate(id);
-  }, []);
-
-  const selecionarProporcao = useCallback((id: IdProporcao) => {
+  const selecionarProporcao = (id: IdProporcao) => {
     setIdProporcao(id);
-    if (id === ID_PROPORCAO_CUSTOM) {
-      return;
-    }
+    if (id === ID_PROPORCAO_CUSTOM) return;
     const proporcao = encontrarProporcao(id);
-    if (proporcao) {
-      setDimensao(proporcao.dimensaoPadrao);
-    }
-  }, []);
+    if (proporcao) setDimensao(proporcao.dimensaoPadrao);
+  };
 
-  const definirDimensao = useCallback((nova: Dimensao) => {
-    setDimensao(nova);
-  }, []);
-
-  const atualizarConteudo = useCallback((parcial: Partial<Conteudo>) => {
+  const atualizarConteudo = (parcial: Partial<Conteudo>) => {
     setConteudo((atual) => ({ ...atual, ...parcial }));
-  }, []);
+  };
 
-  return useMemo<EstadoGerador>(
-    () => ({
-      idTemplate,
-      idProporcao,
-      dimensao,
-      conteudo,
-      selecionarTemplate,
-      selecionarProporcao,
-      definirDimensao,
-      atualizarConteudo,
-    }),
-    [
-      idTemplate,
-      idProporcao,
-      dimensao,
-      conteudo,
-      selecionarTemplate,
-      selecionarProporcao,
-      definirDimensao,
-      atualizarConteudo,
-    ],
-  );
+  return {
+    idTemplate,
+    idProporcao,
+    dimensao,
+    conteudo,
+    selecionarTemplate: setIdTemplate,
+    selecionarProporcao,
+    definirDimensao: setDimensao,
+    atualizarConteudo,
+  };
 }

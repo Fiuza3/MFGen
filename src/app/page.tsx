@@ -3,6 +3,9 @@
 import { Logo } from "@/identidade/Logo";
 import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
+import { CamposDimensaoCustom } from "@/recursos/proporcao/componentes/CamposDimensaoCustom";
+import { SeletorProporcao } from "@/recursos/proporcao/componentes/SeletorProporcao";
+import { ID_PROPORCAO_CUSTOM } from "@/recursos/proporcao/tipos";
 
 /**
  * Página única do gerador. Define a estrutura visual em três seções:
@@ -33,9 +36,21 @@ export default function PaginaGerador() {
           </Secao>
 
           <Secao titulo="Proporção">
-            <Espacador
-              descricao={`${estado.dimensao.largura} × ${estado.dimensao.altura} (${estado.idProporcao})`}
-            />
+            <div className="flex flex-col gap-3">
+              <SeletorProporcao
+                selecionado={estado.idProporcao}
+                aoSelecionar={estado.selecionarProporcao}
+              />
+              {estado.idProporcao === ID_PROPORCAO_CUSTOM && (
+                <CamposDimensaoCustom
+                  dimensao={estado.dimensao}
+                  aoMudar={estado.definirDimensao}
+                />
+              )}
+              <span className="font-mono text-[11px] uppercase tracking-widest text-mf-texto-sutil">
+                {estado.dimensao.largura} × {estado.dimensao.altura} px
+              </span>
+            </div>
           </Secao>
 
           <Secao titulo="Conteúdo">

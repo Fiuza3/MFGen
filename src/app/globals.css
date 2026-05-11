@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
+/*
+ * Tokens da identidade visual da MF Desenvolvimento.
+ * Mantenha em sincronia com src/identidade/cores.ts.
+ */
 @theme inline {
   --font-sans: var(--fonte-sans);
   --font-mono: var(--fonte-mono);
+
+  --color-mf-fundo: #0a0a0b;
+  --color-mf-superficie: #111114;
+  --color-mf-superficie-elevada: #17171b;
+  --color-mf-borda: #1f1f23;
+  --color-mf-borda-forte: #2a2a30;
+
+  --color-mf-texto: #fafafa;
+  --color-mf-texto-secundario: #a1a1aa;
+  --color-mf-texto-sutil: #71717a;
+
+  --color-mf-accent: #10b981;
+  --color-mf-accent-forte: #34d399;
+  --color-mf-accent-sutil: #064e3b;
+
+  --color-mf-alerta: #f97316;
+  --color-mf-erro: #ef4444;
 }
 
 html,
@@ -11,5 +32,7 @@ body {
 }
 
 body {
+  background: var(--color-mf-fundo);
+  color: var(--color-mf-texto);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }

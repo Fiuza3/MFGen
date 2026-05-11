@@ -2,22 +2,19 @@ import { cores } from "@/identidade/cores";
 import { Logo } from "@/identidade/Logo";
 import { familias, pesos } from "@/identidade/tipografia";
 
+import { criarEscala, type Escala } from "../escala";
 import type { PropsTemplate } from "../tipos";
 
-/**
- * Estilo "commit log": hash falso à esquerda, branch como tag,
- * mensagem como título e descrição como corpo.
- */
 export function CommitCard({ dimensao, conteudo }: PropsTemplate) {
-  const fator = Math.min(dimensao.largura, dimensao.altura) / 1080;
-  const px = (valor: number) => `${valor * fator}px`;
+  const escala = criarEscala(dimensao);
+  const { px } = escala;
 
   const titulo = conteudo.titulo.trim() || "primeira mensagem do commit";
   const subtitulo =
     conteudo.subtitulo.trim() ||
     "descrição estendida do commit aparece logo abaixo, com mais detalhes.";
   const tag = conteudo.tag.trim() || "main";
-  const hash = derivarHash(titulo);
+  const hash = hashCurto(titulo);
 
   return (
     <div
@@ -34,20 +31,20 @@ export function CommitCard({ dimensao, conteudo }: PropsTemplate) {
         color: cores.textoPrimario,
       }}
     >
-      <Topo px={px} />
+      <Topo escala={escala} />
       <Corpo
         hash={hash}
         tag={tag}
         titulo={titulo}
         subtitulo={subtitulo}
-        px={px}
+        escala={escala}
       />
-      <Rodape px={px} />
+      <Rodape escala={escala} />
     </div>
   );
 }
 
-function Topo({ px }: { px: (valor: number) => string }) {
+function Topo({ escala }: { escala: Escala }) {
   return (
     <div
       style={{
@@ -55,7 +52,7 @@ function Topo({ px }: { px: (valor: number) => string }) {
         alignItems: "center",
         justifyContent: "space-between",
         fontFamily: familias.mono,
-        fontSize: px(20),
+        fontSize: escala.px(20),
         color: cores.textoSutil,
         letterSpacing: "0.18em",
         textTransform: "uppercase",
@@ -72,14 +69,15 @@ function Corpo({
   tag,
   titulo,
   subtitulo,
-  px,
+  escala,
 }: {
   hash: string;
   tag: string;
   titulo: string;
   subtitulo: string;
-  px: (valor: number) => string;
+  escala: Escala;
 }) {
+  const { px } = escala;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: px(40) }}>
       <div
@@ -94,7 +92,7 @@ function Corpo({
         <span style={{ color: cores.accentForte, fontWeight: pesos.semibold }}>
           {hash}
         </span>
-        <BadgeBranch tag={tag} px={px} />
+        <BadgeBranch tag={tag} escala={escala} />
       </div>
       <h1
         style={{
@@ -125,13 +123,8 @@ function Corpo({
   );
 }
 
-function BadgeBranch({
-  tag,
-  px,
-}: {
-  tag: string;
-  px: (valor: number) => string;
-}) {
+function BadgeBranch({ tag, escala }: { tag: string; escala: Escala }) {
+  const { px } = escala;
   return (
     <span
       style={{
@@ -161,7 +154,7 @@ function BadgeBranch({
   );
 }
 
-function Rodape({ px }: { px: (valor: number) => string }) {
+function Rodape({ escala }: { escala: Escala }) {
   return (
     <div
       style={{
@@ -169,26 +162,21 @@ function Rodape({ px }: { px: (valor: number) => string }) {
         alignItems: "center",
         justifyContent: "space-between",
         fontFamily: familias.mono,
-        fontSize: px(20),
+        fontSize: escala.px(20),
         color: cores.textoSutil,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
       }}
     >
-      <Logo
-        tamanho={Number(px(24).replace("px", ""))}
-        corSigla={cores.accentForte}
-      />
+      <Logo tamanho={escala.n(24)} corSigla={cores.accentForte} />
       <span>autor / marcus fiuza</span>
     </div>
   );
 }
 
-/**
- * Gera um "hash" determinístico curto a partir do título, só para
- * decorar — não tem valor criptográfico nem semântico.
- */
-function derivarHash(entrada: string): string {
+// Decorativo: gera 7 chars hex estáveis a partir do título. Não é hash
+// criptográfico; só serve para não mostrar um valor literal estático.
+function hashCurto(entrada: string): string {
   let h = 0;
   for (let i = 0; i < entrada.length; i++) {
     h = (h * 31 + entrada.charCodeAt(i)) >>> 0;

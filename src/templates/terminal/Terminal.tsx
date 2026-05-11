@@ -2,17 +2,12 @@ import { cores } from "@/identidade/cores";
 import { Logo } from "@/identidade/Logo";
 import { familias, pesos } from "@/identidade/tipografia";
 
+import { criarEscala, type Escala } from "../escala";
 import type { PropsTemplate } from "../tipos";
 
-/**
- * Janela de terminal estilizada. O título vira o comando (`$ ...`),
- * o subtítulo vira a saída e a tag aparece como label da janela.
- */
 export function Terminal({ dimensao, conteudo }: PropsTemplate) {
-  // Fator de escala baseado no menor lado, comparado ao canvas de
-  // referência de 1080px. Mantém proporção visual entre formatos.
-  const fator = Math.min(dimensao.largura, dimensao.altura) / 1080;
-  const px = (valor: number) => `${valor * fator}px`;
+  const escala = criarEscala(dimensao);
+  const { px } = escala;
 
   const titulo = conteudo.titulo.trim() || "diga algo bonito";
   const subtitulo =
@@ -44,7 +39,7 @@ export function Terminal({ dimensao, conteudo }: PropsTemplate) {
           boxShadow: `0 ${px(30)} ${px(80)} rgba(0,0,0,0.6)`,
         }}
       >
-        <BarraDaJanela rotulo={rotuloJanela} px={px} />
+        <BarraDaJanela rotulo={rotuloJanela} escala={escala} />
         <div
           style={{
             padding: `${px(56)} ${px(64)} ${px(72)}`,
@@ -53,22 +48,22 @@ export function Terminal({ dimensao, conteudo }: PropsTemplate) {
             gap: px(32),
           }}
         >
-          <Linha prompt="$" texto={titulo} px={px} cor={cores.accentForte} />
-          <Saida texto={subtitulo} px={px} />
+          <Linha
+            prompt="$"
+            texto={titulo}
+            cor={cores.accentForte}
+            escala={escala}
+          />
+          <Saida texto={subtitulo} escala={escala} />
         </div>
-        <Rodape px={px} />
+        <Rodape escala={escala} />
       </div>
     </div>
   );
 }
 
-function BarraDaJanela({
-  rotulo,
-  px,
-}: {
-  rotulo: string;
-  px: (valor: number) => string;
-}) {
+function BarraDaJanela({ rotulo, escala }: { rotulo: string; escala: Escala }) {
+  const { px } = escala;
   return (
     <div
       style={{
@@ -80,9 +75,9 @@ function BarraDaJanela({
         borderBottom: `${px(1)} solid ${cores.borda}`,
       }}
     >
-      <Bolinha cor="#FF5F57" px={px} />
-      <Bolinha cor="#FEBC2E" px={px} />
-      <Bolinha cor="#28C840" px={px} />
+      <Ponto cor="#FF5F57" escala={escala} />
+      <Ponto cor="#FEBC2E" escala={escala} />
+      <Ponto cor="#28C840" escala={escala} />
       <span
         style={{
           marginLeft: px(20),
@@ -98,18 +93,13 @@ function BarraDaJanela({
   );
 }
 
-function Bolinha({
-  cor,
-  px,
-}: {
-  cor: string;
-  px: (valor: number) => string;
-}) {
+function Ponto({ cor, escala }: { cor: string; escala: Escala }) {
+  const lado = escala.px(18);
   return (
     <span
       style={{
-        width: px(18),
-        height: px(18),
+        width: lado,
+        height: lado,
         borderRadius: "50%",
         background: cor,
         display: "inline-block",
@@ -122,13 +112,14 @@ function Linha({
   prompt,
   texto,
   cor,
-  px,
+  escala,
 }: {
   prompt: string;
   texto: string;
   cor: string;
-  px: (valor: number) => string;
+  escala: Escala;
 }) {
+  const { px } = escala;
   return (
     <p
       style={{
@@ -150,19 +141,13 @@ function Linha({
   );
 }
 
-function Saida({
-  texto,
-  px,
-}: {
-  texto: string;
-  px: (valor: number) => string;
-}) {
+function Saida({ texto, escala }: { texto: string; escala: Escala }) {
   return (
     <p
       style={{
         margin: 0,
         fontFamily: familias.sans,
-        fontSize: px(34),
+        fontSize: escala.px(34),
         lineHeight: 1.45,
         color: cores.textoSecundario,
         maxWidth: "90%",
@@ -173,7 +158,8 @@ function Saida({
   );
 }
 
-function Rodape({ px }: { px: (valor: number) => string }) {
+function Rodape({ escala }: { escala: Escala }) {
+  const { px, n } = escala;
   return (
     <div
       style={{
@@ -185,10 +171,7 @@ function Rodape({ px }: { px: (valor: number) => string }) {
         background: cores.superficieElevada,
       }}
     >
-      <Logo
-        tamanho={Number(px(22).replace("px", ""))}
-        corSigla={cores.accentForte}
-      />
+      <Logo tamanho={n(22)} corSigla={cores.accentForte} />
       <span
         style={{
           fontFamily: familias.mono,

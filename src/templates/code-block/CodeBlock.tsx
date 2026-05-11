@@ -1,10 +1,13 @@
+import type { ReactNode } from "react";
+
 import { cores } from "@/identidade/cores";
 import { Logo } from "@/identidade/Logo";
 import { familias, pesos } from "@/identidade/tipografia";
 
+import { criarEscala, type Escala } from "../escala";
 import type { PropsTemplate } from "../tipos";
 
-const TONS_SINTAXE = {
+const SINTAXE = {
   keyword: "#C084FC",
   funcao: "#34D399",
   string: "#FCD34D",
@@ -12,29 +15,27 @@ const TONS_SINTAXE = {
   identificador: "#FAFAFA",
 } as const;
 
-/**
- * Bloco de código com gutter (números de linha) à esquerda e linhas
- * com tokens coloridos imitando uma IDE.
- */
-export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
-  const fator = Math.min(dimensao.largura, dimensao.altura) / 1080;
-  const px = (valor: number) => `${valor * fator}px`;
+type Linha = { numero: number; render: () => ReactNode };
 
-  const arquivo = sanitizarNomeArquivo(conteudo.tag) || "mfgen.ts";
-  const identificador = sanitizarIdentificador(conteudo.titulo) || "boasVindas";
+export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
+  const escala = criarEscala(dimensao);
+  const { px } = escala;
+
+  const arquivo = nomeArquivoApartirDaTag(conteudo.tag);
+  const identificador = identificadorApartirDoTitulo(conteudo.titulo);
   const stringRetorno = conteudo.titulo.trim() || "Olá, mundo!";
   const comentario =
     conteudo.subtitulo.trim() || "comentário explicando a intenção do código";
 
-  const linhas = [
+  const linhas: Linha[] = [
     { numero: 1, render: () => <Comentario texto={`// ${comentario}`} /> },
     {
       numero: 2,
       render: () => (
         <>
-          <Token cor={TONS_SINTAXE.keyword}>export default function</Token>{" "}
-          <Token cor={TONS_SINTAXE.funcao}>{identificador}</Token>
-          <Token cor={TONS_SINTAXE.identificador}>{"() {"}</Token>
+          <Token cor={SINTAXE.keyword}>export default function</Token>{" "}
+          <Token cor={SINTAXE.funcao}>{identificador}</Token>
+          <Token cor={SINTAXE.identificador}>{"() {"}</Token>
         </>
       ),
     },
@@ -42,15 +43,15 @@ export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
       numero: 3,
       render: () => (
         <span style={{ paddingLeft: px(48) }}>
-          <Token cor={TONS_SINTAXE.keyword}>return</Token>{" "}
-          <Token cor={TONS_SINTAXE.string}>{`"${stringRetorno}"`}</Token>
-          <Token cor={TONS_SINTAXE.identificador}>;</Token>
+          <Token cor={SINTAXE.keyword}>return</Token>{" "}
+          <Token cor={SINTAXE.string}>{`"${stringRetorno}"`}</Token>
+          <Token cor={SINTAXE.identificador}>;</Token>
         </span>
       ),
     },
     {
       numero: 4,
-      render: () => <Token cor={TONS_SINTAXE.identificador}>{"}"}</Token>,
+      render: () => <Token cor={SINTAXE.identificador}>{"}"}</Token>,
     },
   ];
 
@@ -69,7 +70,7 @@ export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
         color: cores.textoPrimario,
       }}
     >
-      <BarraArquivo arquivo={arquivo} px={px} />
+      <BarraArquivo arquivo={arquivo} escala={escala} />
       <div
         style={{
           flex: 1,
@@ -89,7 +90,7 @@ export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
             gap: px(40),
           }}
         >
-          <Gutter linhas={linhas.map((l) => l.numero)} px={px} />
+          <Gutter linhas={linhas.map((l) => l.numero)} escala={escala} />
           <pre
             style={{
               margin: 0,
@@ -103,13 +104,11 @@ export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
             }}
           >
             {linhas.map((linha) => (
-              <div key={linha.numero} style={{ display: "block" }}>
-                {linha.render()}
-              </div>
+              <div key={linha.numero}>{linha.render()}</div>
             ))}
           </pre>
         </div>
-        <Rodape px={px} />
+        <Rodape escala={escala} />
       </div>
     </div>
   );
@@ -117,11 +116,12 @@ export function CodeBlock({ dimensao, conteudo }: PropsTemplate) {
 
 function BarraArquivo({
   arquivo,
-  px,
+  escala,
 }: {
   arquivo: string;
-  px: (valor: number) => string;
+  escala: Escala;
 }) {
+  const { px } = escala;
   return (
     <div
       style={{
@@ -148,19 +148,13 @@ function BarraArquivo({
   );
 }
 
-function Gutter({
-  linhas,
-  px,
-}: {
-  linhas: number[];
-  px: (valor: number) => string;
-}) {
+function Gutter({ linhas, escala }: { linhas: number[]; escala: Escala }) {
+  const { px } = escala;
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: 0,
         borderRight: `${px(1)} solid ${cores.borda}`,
         paddingRight: px(28),
         fontFamily: familias.mono,
@@ -178,25 +172,22 @@ function Gutter({
   );
 }
 
-function Token({
-  cor,
-  children,
-}: {
-  cor: string;
-  children: React.ReactNode;
-}) {
-  return <span style={{ color: cor, fontWeight: pesos.semibold }}>{children}</span>;
+function Token({ cor, children }: { cor: string; children: ReactNode }) {
+  return (
+    <span style={{ color: cor, fontWeight: pesos.semibold }}>{children}</span>
+  );
 }
 
 function Comentario({ texto }: { texto: string }) {
   return (
-    <span style={{ color: TONS_SINTAXE.comentario, fontStyle: "italic" }}>
+    <span style={{ color: SINTAXE.comentario, fontStyle: "italic" }}>
       {texto}
     </span>
   );
 }
 
-function Rodape({ px }: { px: (valor: number) => string }) {
+function Rodape({ escala }: { escala: Escala }) {
+  const { px } = escala;
   return (
     <div
       style={{
@@ -208,10 +199,7 @@ function Rodape({ px }: { px: (valor: number) => string }) {
         background: cores.superficieElevada,
       }}
     >
-      <Logo
-        tamanho={Number(px(22).replace("px", ""))}
-        corSigla={cores.accentForte}
-      />
+      <Logo tamanho={escala.n(22)} corSigla={cores.accentForte} />
       <span
         style={{
           fontFamily: familias.mono,
@@ -227,25 +215,22 @@ function Rodape({ px }: { px: (valor: number) => string }) {
   );
 }
 
-function sanitizarNomeArquivo(valor: string): string {
-  const limpo = valor.trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
-  if (!limpo) return "";
+function nomeArquivoApartirDaTag(tag: string): string {
+  const limpo = tag.trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+  if (!limpo) return "mfgen.ts";
   return limpo.includes(".") ? limpo : `${limpo}.ts`;
 }
 
-function sanitizarIdentificador(valor: string): string {
-  const palavras = valor
+function identificadorApartirDoTitulo(titulo: string): string {
+  const palavras = titulo
     .trim()
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
     .filter(Boolean);
-  if (palavras.length === 0) return "";
+  if (palavras.length === 0) return "boasVindas";
   const [primeira, ...resto] = palavras;
-  return (
-    primeira +
-    resto
-      .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-      .join("")
-  ).slice(0, 28);
+  const camel =
+    primeira + resto.map((p) => p[0].toUpperCase() + p.slice(1)).join("");
+  return camel.slice(0, 28);
 }

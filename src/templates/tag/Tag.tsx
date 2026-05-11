@@ -2,15 +2,12 @@ import { cores } from "@/identidade/cores";
 import { Logo } from "@/identidade/Logo";
 import { familias, pesos } from "@/identidade/tipografia";
 
+import { criarEscala, type Escala } from "../escala";
 import type { PropsTemplate } from "../tipos";
 
-/**
- * Composição de destaque: tag em capitulares no topo, título em
- * tamanho enorme dominando o centro, subtítulo discreto e logo no pé.
- */
 export function Tag({ dimensao, conteudo }: PropsTemplate) {
-  const fator = Math.min(dimensao.largura, dimensao.altura) / 1080;
-  const px = (valor: number) => `${valor * fator}px`;
+  const escala = criarEscala(dimensao);
+  const { px } = escala;
 
   const tag = conteudo.tag.trim() || "destaque";
   const titulo = conteudo.titulo.trim() || "Um título que merece tela inteira";
@@ -35,9 +32,9 @@ export function Tag({ dimensao, conteudo }: PropsTemplate) {
         overflow: "hidden",
       }}
     >
-      <DecoracaoLateral px={px} />
+      <DecoracaoLateral escala={escala} />
 
-      <CabecalhoTag tag={tag} px={px} />
+      <CabecalhoTag tag={tag} escala={escala} />
 
       <h1
         style={{
@@ -74,30 +71,16 @@ export function Tag({ dimensao, conteudo }: PropsTemplate) {
         >
           {subtitulo}
         </p>
-        <Logo
-          tamanho={Number(px(28).replace("px", ""))}
-          corSigla={cores.accentForte}
-        />
+        <Logo tamanho={escala.n(28)} corSigla={cores.accentForte} />
       </div>
     </div>
   );
 }
 
-function CabecalhoTag({
-  tag,
-  px,
-}: {
-  tag: string;
-  px: (valor: number) => string;
-}) {
+function CabecalhoTag({ tag, escala }: { tag: string; escala: Escala }) {
+  const { px } = escala;
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: px(20),
-      }}
-    >
+    <div style={{ display: "flex", alignItems: "center", gap: px(20) }}>
       <span
         aria-hidden
         style={{
@@ -123,7 +106,8 @@ function CabecalhoTag({
   );
 }
 
-function DecoracaoLateral({ px }: { px: (valor: number) => string }) {
+function DecoracaoLateral({ escala }: { escala: Escala }) {
+  const { px } = escala;
   return (
     <span
       aria-hidden

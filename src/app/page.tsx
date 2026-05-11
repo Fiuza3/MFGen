@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import { Logo } from "@/identidade/Logo";
 import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
@@ -7,6 +9,7 @@ import { SeletorTemplate } from "@/recursos/galeria/componentes/SeletorTemplate"
 import { CamposDimensaoCustom } from "@/recursos/proporcao/componentes/CamposDimensaoCustom";
 import { SeletorProporcao } from "@/recursos/proporcao/componentes/SeletorProporcao";
 import { ID_PROPORCAO_CUSTOM } from "@/recursos/proporcao/tipos";
+import { Palco } from "@/recursos/visualizador/componentes/Palco";
 import { obterTemplatePadrao, obterTemplate } from "@/templates/registro";
 
 /**
@@ -23,6 +26,12 @@ export default function PaginaGerador() {
   const entradaAtual = obterTemplate(estado.idTemplate) ?? templatePadrao;
   const Componente = entradaAtual?.Componente;
 
+  /**
+   * Aponta para o nó renderizado em dimensão real dentro do palco.
+   * Será usado pelo botão exportar no próximo commit.
+   */
+  const refNoExportavel = useRef<HTMLDivElement>(null);
+
   return (
     <div className="min-h-full bg-mf-fundo text-mf-texto flex flex-col">
       <header className="border-b border-mf-borda px-6 py-4 flex items-center justify-between">
@@ -32,7 +41,7 @@ export default function PaginaGerador() {
         </span>
       </header>
 
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-0">
+      <main className="flex-1 grid grid-cols-1 lg:grid-cols-[420px_1fr] min-h-0">
         <aside className="border-b lg:border-b-0 lg:border-r border-mf-borda overflow-y-auto">
           <Secao titulo="Galeria">
             <SeletorTemplate
@@ -71,14 +80,18 @@ export default function PaginaGerador() {
           </Secao>
         </aside>
 
-        <section className="flex items-center justify-center p-8 bg-mf-superficie overflow-auto">
+        <section className="bg-mf-superficie min-h-0 overflow-hidden">
           {Componente ? (
-            <Componente
-              dimensao={estado.dimensao}
-              conteudo={estado.conteudo}
-            />
+            <Palco dimensao={estado.dimensao} ref={refNoExportavel}>
+              <Componente
+                dimensao={estado.dimensao}
+                conteudo={estado.conteudo}
+              />
+            </Palco>
           ) : (
-            <Espacador descricao="Nenhum template registrado." />
+            <div className="flex h-full items-center justify-center p-8">
+              <Espacador descricao="Nenhum template registrado." />
+            </div>
           )}
         </section>
       </main>

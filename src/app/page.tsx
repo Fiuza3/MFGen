@@ -2,6 +2,7 @@
 
 import { Logo } from "@/identidade/Logo";
 import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
+import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
 
 /**
  * Página única do gerador. Define a estrutura visual em três seções:
@@ -38,8 +39,9 @@ export default function PaginaGerador() {
           </Secao>
 
           <Secao titulo="Conteúdo">
-            <Espacador
-              descricao={`Título: ${estado.conteudo.titulo || "—"}`}
+            <FormularioConteudo
+              conteudo={estado.conteudo}
+              aoMudar={estado.atualizarConteudo}
             />
           </Secao>
 

@@ -1,5 +1,7 @@
 import { CommitCard } from "./commit/CommitCard";
 import { metaCommit } from "./commit/meta";
+import { Tag } from "./tag/Tag";
+import { metaTag } from "./tag/meta";
 import { Terminal } from "./terminal/Terminal";
 import { metaTerminal } from "./terminal/meta";
 import type { EntradaRegistro } from "./tipos";
@@ -12,6 +14,7 @@ import type { EntradaRegistro } from "./tipos";
 export const templates: readonly EntradaRegistro[] = [
   { meta: metaTerminal, Componente: Terminal },
   { meta: metaCommit, Componente: CommitCard },
+  { meta: metaTag, Componente: Tag },
 ] as const;
 
 export function obterTemplate(id: string): EntradaRegistro | undefined {

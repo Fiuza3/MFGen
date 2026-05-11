@@ -44,8 +44,7 @@ src/
 │
 ├── identidade/             # Tokens da marca MF Desenvolvimento
 │   ├── cores.ts            # Paleta hex
-│   ├── tipografia.ts       # Famílias, pesos, escala de tamanhos
-│   ├── espacamentos.ts     # Escala de espaço, raios, bordas
+│   ├── tipografia.ts       # Famílias e pesos
 │   └── Logo.tsx            # Componente <MF/>
 │
 ├── templates/              # Galeria de templates

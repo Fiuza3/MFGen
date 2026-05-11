@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Logo } from "@/identidade/Logo";
 import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
+import { BotaoExportar } from "@/recursos/exportador/componentes/BotaoExportar";
 import { SeletorTemplate } from "@/recursos/galeria/componentes/SeletorTemplate";
 import { CamposDimensaoCustom } from "@/recursos/proporcao/componentes/CamposDimensaoCustom";
 import { SeletorProporcao } from "@/recursos/proporcao/componentes/SeletorProporcao";
@@ -76,7 +77,11 @@ export default function PaginaGerador() {
           </Secao>
 
           <Secao titulo="Exportar">
-            <Espacador descricao="Botão de exportar PNG entra aqui." />
+            <BotaoExportar
+              refNo={refNoExportavel}
+              dimensao={estado.dimensao}
+              idTemplate={estado.idTemplate}
+            />
           </Secao>
         </aside>
 

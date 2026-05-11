@@ -22,7 +22,8 @@ type PalcoProps = {
  * Mantém o template em tamanho real no DOM (importante para captura
  * fiel ao exportar) e aplica `transform: scale()` num wrapper para a
  * imagem caber visualmente no espaço disponível. O ref encaminhado
- * aponta para o nó com a dimensão real, que é o que o exportador captura.
+ * aponta para o nó interno sem transform, que é o que o exportador
+ * deve capturar.
  */
 export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
   { dimensao, children },
@@ -51,7 +52,6 @@ export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
   }, []);
 
   useEffect(() => {
-    // Atualiza também quando a dimensão alvo muda, garantindo recálculo.
     if (containerRef.current) {
       setTamanhoContainer({
         largura: containerRef.current.clientWidth,
@@ -75,10 +75,7 @@ export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
         }}
       >
         <div
-          ref={ref}
           style={{
-            width: dimensao.largura,
-            height: dimensao.altura,
             transform: `scale(${escala})`,
             transformOrigin: "top left",
             position: "absolute",
@@ -86,7 +83,12 @@ export const Palco = forwardRef<HTMLDivElement, PalcoProps>(function Palco(
             left: 0,
           }}
         >
-          {children}
+          <div
+            ref={ref}
+            style={{ width: dimensao.largura, height: dimensao.altura }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

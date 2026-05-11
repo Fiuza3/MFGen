@@ -1,65 +1,82 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { Logo } from "@/identidade/Logo";
+import { usarEstadoGerador } from "@/compartilhado/hooks/usarEstadoGerador";
+
+/**
+ * Página única do gerador. Define a estrutura visual em três seções:
+ * — galeria de templates,
+ * — editor (proporção + conteúdo),
+ * — visualizador (preview + exportar).
+ *
+ * Cada seção será preenchida pelos próximos commits.
+ */
+export default function PaginaGerador() {
+  const estado = usarEstadoGerador({ idTemplateInicial: "" });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="min-h-full bg-mf-fundo text-mf-texto flex flex-col">
+      <header className="border-b border-mf-borda px-6 py-4 flex items-center justify-between">
+        <Logo tamanho={22} corSigla="#10B981" />
+        <span className="font-mono text-xs text-mf-texto-secundario uppercase tracking-widest">
+          gerador de imagens
+        </span>
+      </header>
+
+      <main className="flex-1 grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-0">
+        <aside className="border-b lg:border-b-0 lg:border-r border-mf-borda overflow-y-auto">
+          <Secao titulo="Galeria">
+            <Espacador
+              descricao={`Template selecionado: ${estado.idTemplate || "—"}`}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </Secao>
+
+          <Secao titulo="Proporção">
+            <Espacador
+              descricao={`${estado.dimensao.largura} × ${estado.dimensao.altura} (${estado.idProporcao})`}
+            />
+          </Secao>
+
+          <Secao titulo="Conteúdo">
+            <Espacador
+              descricao={`Título: ${estado.conteudo.titulo || "—"}`}
+            />
+          </Secao>
+
+          <Secao titulo="Exportar">
+            <Espacador descricao="Botão de exportar PNG entra aqui." />
+          </Secao>
+        </aside>
+
+        <section className="flex items-center justify-center p-8 bg-mf-superficie">
+          <Espacador descricao="Visualizador entra aqui." />
+        </section>
       </main>
+    </div>
+  );
+}
+
+function Secao({
+  titulo,
+  children,
+}: {
+  titulo: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="border-b border-mf-borda px-6 py-5">
+      <h2 className="font-mono text-xs uppercase tracking-widest text-mf-texto-secundario mb-3">
+        {titulo}
+      </h2>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+function Espacador({ descricao }: { descricao: string }) {
+  return (
+    <div className="rounded-md border border-dashed border-mf-borda-forte bg-mf-superficie-elevada/40 px-4 py-3 text-sm text-mf-texto-sutil">
+      {descricao}
     </div>
   );
 }

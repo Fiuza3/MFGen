@@ -12,6 +12,7 @@ renderizados no navegador e capturados como imagem — rápido, previsível e
 ## Como funciona
 
 1. **Galeria** — escolha um template:
+   - **Marca** — logo `<MF/>` centralizado com glow, ideal para avatar
    - **Post Instagram** (1:1) — feed quadrado para divulgação de serviço
    - **Story / Reels** (9:16) — vertical com CTA forte
    - **Anúncio OLX** — preço destacado + contato, para classificados
@@ -57,6 +58,7 @@ src/
 │   ├── tipos.ts            # PropsTemplate, MetadadosTemplate, EntradaRegistro
 │   ├── registro.ts         # Lista única de templates disponíveis
 │   ├── escala.ts           # Helper de escala usado por todos os templates
+│   ├── marca/              # Logo gigante centralizado
 │   ├── post-instagram/     # Post quadrado de divulgação
 │   ├── story-reels/        # Story / Reels (9:16)
 │   ├── anuncio-olx/        # Anúncio com preço + contato
@@ -148,6 +150,18 @@ Espelha o site `mfdesenvolvimento.online`:
 
 Definidos em [`src/identidade/cores.ts`](src/identidade/cores.ts) e espelhados em
 [`src/app/globals.css`](src/app/globals.css) (`@theme inline`).
+
+### Logo
+
+O componente [`Logo`](src/identidade/Logo.tsx) renderiza `<MF/>` com cada
+parte na cor certa por padrão:
+
+- `<` e `>` → `accent` (`#3DF2E0`)
+- `MF` → `texto` (`#F7FAFC`)
+- `/` → `texto-secundario` (`#A0AEC0`)
+
+As props `corColchetes`, `corSigla` e `corBarra` permitem sobrescrever
+caso um template precise — mas o default já sai idêntico ao logo do site.
 
 ## Roadmap
 

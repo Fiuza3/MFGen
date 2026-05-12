@@ -35,7 +35,7 @@ export function Marca({ dimensao, conteudo }: PropsTemplate) {
 
       {tag && <Tagline texto={tag} escala={escala} />}
 
-      <Logo tamanho={n(240)} />
+      <Logo tamanho={n(320)} />
 
       <Subtitulo texto={subtitulo} escala={escala} />
 

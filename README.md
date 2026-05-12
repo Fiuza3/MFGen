@@ -153,15 +153,18 @@ Definidos em [`src/identidade/cores.ts`](src/identidade/cores.ts) e espelhados e
 
 ### Logo
 
-O componente [`Logo`](src/identidade/Logo.tsx) renderiza `<MF/>` com cada
-parte na cor certa por padrão:
+O componente [`Logo`](src/identidade/Logo.tsx) é um SVG `<text>` com as
+mesmas métricas do logo do `mfdesenvolvimento.online`:
 
-- `<` e `>` → `accent` (`#3DF2E0`)
-- `MF` → `texto` (`#F7FAFC`)
-- `/` → `texto-secundario` (`#A0AEC0`)
+- Cor base: `accent` (`#3DF2E0`) — **tudo** ciano.
+- Peso: `700` (Geist Mono Bold).
+- Opacidade dos colchetes `<` e `/>`: `0.58` (variante `compacto`: `0.28`).
+  É a opacidade que dá a aparência de "tom menor", não uma cor diferente.
+- Avanço de glifo (advance width) e padding seguem o ratio extraído do
+  Geist Mono em `fontSize 22` — escala proporcional em qualquer `tamanho`.
 
-As props `corColchetes`, `corSigla` e `corBarra` permitem sobrescrever
-caso um template precise — mas o default já sai idêntico ao logo do site.
+Props `cor`, `opacidadeColchetes` e `compacto` permitem variantes pontuais,
+mas o default já sai idêntico ao site.
 
 ## Roadmap
 

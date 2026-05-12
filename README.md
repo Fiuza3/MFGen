@@ -9,6 +9,13 @@ Sem APIs externas, sem backend. Os templates são componentes React
 renderizados no navegador e capturados como imagem — rápido, previsível e
 100% grátis para hospedar.
 
+## Rotas
+
+- **`/`** — Apresentação. Conta o que é o MFgen, lista os passos, mostra
+  formas de contato e o convite para encomendar um site no mesmo estilo.
+- **`/gerar`** — O gerador propriamente dito (galeria, editor e
+  exportador).
+
 ## Como funciona
 
 1. **Galeria** — escolha um template:
@@ -106,6 +113,7 @@ convenção estabelecida (`useState`, `useEstadoGerador`, `props`).
 
 - **Next.js 16** (App Router) + **TypeScript**.
 - **Tailwind CSS v4** com tokens da marca expostos via `@theme inline`.
+- **`framer-motion`** para as animações da página de apresentação e do logo.
 - **`html-to-image`** para capturar o template como PNG na resolução exata.
 - **`next/font`** para self-host de Geist (sans) e Geist Mono (mono),
   alinhado com a tipografia do `mfdesenvolvimento.online`.

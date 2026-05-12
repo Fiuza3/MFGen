@@ -6,6 +6,8 @@ import { CodeBlock } from "./code-block/CodeBlock";
 import { metaCodeBlock } from "./code-block/meta";
 import { CommitCard } from "./commit/CommitCard";
 import { metaCommit } from "./commit/meta";
+import { Marca } from "./marca/Marca";
+import { metaMarca } from "./marca/meta";
 import { PostInstagram } from "./post-instagram/PostInstagram";
 import { metaPostInstagram } from "./post-instagram/meta";
 import { StoryReels } from "./story-reels/StoryReels";
@@ -19,6 +21,7 @@ import type { EntradaRegistro } from "./tipos";
 // Único ponto que conhece o conjunto de templates disponíveis.
 // Adicionar um novo template é só uma linha aqui.
 export const templates: readonly EntradaRegistro[] = [
+  { meta: metaMarca, Componente: Marca },
   { meta: metaPostInstagram, Componente: PostInstagram },
   { meta: metaStoryReels, Componente: StoryReels },
   { meta: metaAnuncioOlx, Componente: AnuncioOlx },

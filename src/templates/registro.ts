@@ -1,3 +1,5 @@
+import { AnuncioOlx } from "./anuncio-olx/AnuncioOlx";
+import { metaAnuncioOlx } from "./anuncio-olx/meta";
 import { CodeBlock } from "./code-block/CodeBlock";
 import { metaCodeBlock } from "./code-block/meta";
 import { CommitCard } from "./commit/CommitCard";
@@ -17,6 +19,7 @@ import type { EntradaRegistro } from "./tipos";
 export const templates: readonly EntradaRegistro[] = [
   { meta: metaPostInstagram, Componente: PostInstagram },
   { meta: metaStoryReels, Componente: StoryReels },
+  { meta: metaAnuncioOlx, Componente: AnuncioOlx },
   { meta: metaTerminal, Componente: Terminal },
   { meta: metaCommit, Componente: CommitCard },
   { meta: metaTag, Componente: Tag },

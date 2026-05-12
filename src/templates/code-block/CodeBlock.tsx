@@ -199,7 +199,7 @@ function Rodape({ escala }: { escala: Escala }) {
         background: cores.superficieElevada,
       }}
     >
-      <Logo tamanho={escala.n(22)} corSigla={cores.accentForte} />
+      <Logo tamanho={escala.n(22)} />
       <span
         style={{
           fontFamily: familias.mono,

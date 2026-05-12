@@ -71,7 +71,7 @@ export function Tag({ dimensao, conteudo }: PropsTemplate) {
         >
           {subtitulo}
         </p>
-        <Logo tamanho={escala.n(28)} corSigla={cores.accentForte} />
+        <Logo tamanho={escala.n(28)} />
       </div>
     </div>
   );

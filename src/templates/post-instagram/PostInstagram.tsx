@@ -164,7 +164,7 @@ function Rodape({
           gap: px(8),
         }}
       >
-        <Logo tamanho={escala.n(26)} corSigla={cores.accent} />
+        <Logo tamanho={escala.n(26)} />
         <span
           style={{
             fontFamily: familias.mono,

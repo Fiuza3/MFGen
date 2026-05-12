@@ -168,7 +168,7 @@ function Rodape({ escala }: { escala: Escala }) {
         textTransform: "uppercase",
       }}
     >
-      <Logo tamanho={escala.n(24)} corSigla={cores.accentForte} />
+      <Logo tamanho={escala.n(24)} />
       <span>autor / marcus fiuza</span>
     </div>
   );

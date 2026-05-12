@@ -86,7 +86,7 @@ function Topo({ tag, escala }: { tag: string; escala: Escala }) {
   const { px } = escala;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: px(16) }}>
-      <Logo tamanho={escala.n(34)} corSigla={cores.accent} />
+      <Logo tamanho={escala.n(34)} />
       <span
         aria-hidden
         style={{

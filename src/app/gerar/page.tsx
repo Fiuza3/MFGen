@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, type ReactNode } from "react";
 
-import { Logo } from "@/identidade/Logo";
+import { LogoAnimado } from "@/identidade/LogoAnimado";
 import { useEstadoGerador } from "@/compartilhado/hooks/useEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
 import { BotaoExportar } from "@/recursos/exportador/componentes/BotaoExportar";
@@ -26,7 +27,13 @@ export default function PaginaGerador() {
   return (
     <div className="min-h-full bg-mf-fundo text-mf-texto flex flex-col">
       <header className="border-b border-mf-borda px-6 py-4 flex items-center justify-between">
-        <Logo tamanho={22} />
+        <Link
+          href="/"
+          aria-label="Voltar para a apresentação"
+          className="inline-flex items-center"
+        >
+          <LogoAnimado tamanho={22} />
+        </Link>
         <span className="font-mono text-xs text-mf-texto-secundario uppercase tracking-widest">
           gerador de imagens
         </span>

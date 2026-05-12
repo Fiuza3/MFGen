@@ -1,19 +1,19 @@
 // Espelhado em globals.css (--color-mf-*). Mudou aqui, muda lá.
 export const cores = {
-  fundo: "#0A0A0B",
-  superficie: "#111114",
-  superficieElevada: "#17171B",
-  borda: "#1F1F23",
-  bordaForte: "#2A2A30",
+  fundo: "#0B0F14",
+  superficie: "#141C26",
+  superficieElevada: "#0F1520",
+  borda: "#1E2A38",
+  bordaForte: "#2A3B4D",
 
-  textoPrimario: "#FAFAFA",
-  textoSecundario: "#A1A1AA",
-  textoSutil: "#71717A",
+  textoPrimario: "#F7FAFC",
+  textoSecundario: "#A0AEC0",
+  textoSutil: "#5C6B7E",
 
-  accent: "#10B981",
-  accentForte: "#34D399",
-  accentSutil: "#064E3B",
+  accent: "#3DF2E0",
+  accentForte: "#5DF5E6",
+  accentSutil: "#3DF2E01A",
 
-  alerta: "#F97316",
-  erro: "#EF4444",
+  alerta: "#FFBD2E",
+  erro: "#E40014",
 } as const;

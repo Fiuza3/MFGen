@@ -9,10 +9,10 @@ import type { PropsTemplate } from "../tipos";
 
 const SINTAXE = {
   keyword: "#C084FC",
-  funcao: "#34D399",
-  string: "#FCD34D",
-  comentario: "#71717A",
-  identificador: "#FAFAFA",
+  funcao: "#3DF2E0",
+  string: "#FFBD2E",
+  comentario: "#5C6B7E",
+  identificador: "#F7FAFC",
 } as const;
 
 type Linha = { numero: number; render: () => ReactNode };

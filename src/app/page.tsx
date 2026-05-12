@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 
+import { cores } from "@/identidade/cores";
 import { Logo } from "@/identidade/Logo";
 import { useEstadoGerador } from "@/compartilhado/hooks/useEstadoGerador";
 import { FormularioConteudo } from "@/recursos/editor/componentes/FormularioConteudo";
@@ -26,7 +27,7 @@ export default function PaginaGerador() {
   return (
     <div className="min-h-full bg-mf-fundo text-mf-texto flex flex-col">
       <header className="border-b border-mf-borda px-6 py-4 flex items-center justify-between">
-        <Logo tamanho={22} corSigla="#10B981" />
+        <Logo tamanho={22} corSigla={cores.accent} />
         <span className="font-mono text-xs text-mf-texto-secundario uppercase tracking-widest">
           gerador de imagens
         </span>

@@ -1,5 +1,7 @@
 import { AnuncioOlx } from "./anuncio-olx/AnuncioOlx";
 import { metaAnuncioOlx } from "./anuncio-olx/meta";
+import { CarrosselCapa } from "./carrossel-capa/CarrosselCapa";
+import { metaCarrosselCapa } from "./carrossel-capa/meta";
 import { CodeBlock } from "./code-block/CodeBlock";
 import { metaCodeBlock } from "./code-block/meta";
 import { CommitCard } from "./commit/CommitCard";
@@ -20,6 +22,7 @@ export const templates: readonly EntradaRegistro[] = [
   { meta: metaPostInstagram, Componente: PostInstagram },
   { meta: metaStoryReels, Componente: StoryReels },
   { meta: metaAnuncioOlx, Componente: AnuncioOlx },
+  { meta: metaCarrosselCapa, Componente: CarrosselCapa },
   { meta: metaTerminal, Componente: Terminal },
   { meta: metaCommit, Componente: CommitCard },
   { meta: metaTag, Componente: Tag },

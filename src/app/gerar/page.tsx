@@ -39,8 +39,28 @@ export default function PaginaGerador() {
         </span>
       </header>
 
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-[420px_1fr] min-h-0">
-        <aside className="border-b lg:border-b-0 lg:border-r border-mf-borda overflow-y-auto">
+      <main className="flex flex-1 flex-col lg:grid lg:grid-cols-[420px_1fr] lg:min-h-0">
+        {/*
+          No mobile o preview vem antes da sidebar (order-1) para o usuário
+          ver o que está editando enquanto rola; no desktop o grid coloca
+          a sidebar à esquerda naturalmente (order-1) e o preview à direita.
+        */}
+        <section className="order-1 min-h-[55vh] overflow-hidden bg-mf-superficie lg:order-2 lg:min-h-0">
+          {Componente ? (
+            <Palco dimensao={estado.dimensao} ref={refExportavel}>
+              <Componente
+                dimensao={estado.dimensao}
+                conteudo={estado.conteudo}
+              />
+            </Palco>
+          ) : (
+            <p className="flex h-full items-center justify-center p-8 text-sm text-mf-texto-sutil">
+              Nenhum template registrado.
+            </p>
+          )}
+        </section>
+
+        <aside className="order-2 border-t border-mf-borda lg:order-1 lg:overflow-y-auto lg:border-r lg:border-t-0">
           <Secao titulo="Galeria">
             <SeletorTemplate
               selecionado={estado.idTemplate}
@@ -81,21 +101,6 @@ export default function PaginaGerador() {
             />
           </Secao>
         </aside>
-
-        <section className="bg-mf-superficie min-h-0 overflow-hidden">
-          {Componente ? (
-            <Palco dimensao={estado.dimensao} ref={refExportavel}>
-              <Componente
-                dimensao={estado.dimensao}
-                conteudo={estado.conteudo}
-              />
-            </Palco>
-          ) : (
-            <p className="flex h-full items-center justify-center p-8 text-sm text-mf-texto-sutil">
-              Nenhum template registrado.
-            </p>
-          )}
-        </section>
       </main>
     </div>
   );

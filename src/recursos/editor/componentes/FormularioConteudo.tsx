@@ -40,6 +40,28 @@ export function FormularioConteudo({
         placeholder="Descrição curta que apoia o título"
         maximo={160}
       />
+      <CampoTexto
+        rotulo="CTA"
+        valor={conteudo.cta}
+        aoMudar={(cta) => aoMudar({ cta })}
+        placeholder="Solicite seu orçamento"
+        maximo={40}
+      />
+      <CampoTexto
+        rotulo="Contato"
+        valor={conteudo.contato}
+        aoMudar={(contato) => aoMudar({ contato })}
+        placeholder="@mfdesenvolvimento · wa.me/55..."
+        maximo={60}
+        mono
+      />
+      <CampoTexto
+        rotulo="Preço"
+        valor={conteudo.preco}
+        aoMudar={(preco) => aoMudar({ preco })}
+        placeholder="A partir de R$ 1.500"
+        maximo={40}
+      />
     </div>
   );
 }

@@ -11,10 +11,16 @@ renderizados no navegador e capturados como imagem — rápido, previsível e
 
 ## Como funciona
 
-1. **Galeria** — escolha um dos templates disponíveis (Terminal, Commit, Destaque, Code Block).
+1. **Galeria** — escolha um template:
+   - **Post Instagram** (1:1) — feed quadrado para divulgação de serviço
+   - **Story / Reels** (9:16) — vertical com CTA forte
+   - **Anúncio OLX** — preço destacado + contato, para classificados
+   - **Carrossel — Capa** (1:1) — primeira página de carrossel IG
+   - **Terminal**, **Commit**, **Destaque**, **Code Block** — variantes dev/CLI
 2. **Proporção** — clique num preset (1:1, 9:16, 16:9, 4:3, 3:4) ou entre com
    dimensões livres no modo `Custom`.
-3. **Conteúdo** — preencha tag, título e subtítulo. O preview atualiza em tempo real.
+3. **Conteúdo** — preencha tag, título, subtítulo, CTA, contato e preço.
+   Cada template usa o que faz sentido; o preview atualiza em tempo real.
 4. **Exportar PNG** — captura o template em tamanho real e baixa um PNG com
    nome `mfgen-{template}-{LxA}-{timestamp}.png`.
 
@@ -38,7 +44,7 @@ Abra [http://localhost:3000](http://localhost:3000).
 ```
 src/
 ├── app/                    # Rotas do Next.js (App Router)
-│   ├── layout.tsx          # Fontes (Inter, JetBrains Mono) e metadata
+│   ├── layout.tsx          # Fontes (Geist, Geist Mono) e metadata
 │   ├── page.tsx            # Página única do gerador
 │   └── globals.css         # Tokens Tailwind + reset
 │
@@ -50,6 +56,11 @@ src/
 ├── templates/              # Galeria de templates
 │   ├── tipos.ts            # PropsTemplate, MetadadosTemplate, EntradaRegistro
 │   ├── registro.ts         # Lista única de templates disponíveis
+│   ├── escala.ts           # Helper de escala usado por todos os templates
+│   ├── post-instagram/     # Post quadrado de divulgação
+│   ├── story-reels/        # Story / Reels (9:16)
+│   ├── anuncio-olx/        # Anúncio com preço + contato
+│   ├── carrossel-capa/     # Capa de carrossel
 │   ├── terminal/           # Janela de terminal
 │   ├── commit/             # Linha de commit log
 │   ├── tag/                # Destaque com tag + título grande
@@ -57,7 +68,7 @@ src/
 │
 ├── recursos/               # Features do app
 │   ├── proporcao/          # Catálogo + seletor + dimensão custom
-│   ├── editor/             # Tipos do conteúdo + form (tag/título/subtítulo)
+│   ├── editor/             # Tipos do conteúdo + form (tag, título, subtítulo, CTA, contato, preço)
 │   ├── galeria/            # SeletorTemplate + CardMiniatura
 │   ├── visualizador/       # Palco com escala dinâmica
 │   └── exportador/         # html-to-image + botão de exportar
@@ -94,7 +105,8 @@ convenção estabelecida (`useState`, `useEstadoGerador`, `props`).
 - **Next.js 16** (App Router) + **TypeScript**.
 - **Tailwind CSS v4** com tokens da marca expostos via `@theme inline`.
 - **`html-to-image`** para capturar o template como PNG na resolução exata.
-- **`next/font`** para self-host de Inter (sans) e JetBrains Mono (mono).
+- **`next/font`** para self-host de Geist (sans) e Geist Mono (mono),
+  alinhado com a tipografia do `mfdesenvolvimento.online`.
 
 ## Adicionar um novo template
 
@@ -121,11 +133,27 @@ vercel
 Ou conecte o repositório no painel da Vercel — o `build` padrão do
 Next.js já cobre tudo. Não há variáveis de ambiente para configurar.
 
+## Paleta
+
+Espelha o site `mfdesenvolvimento.online`:
+
+| Token | Hex |
+|---|---|
+| `fundo` | `#0B0F14` |
+| `superficie` | `#141C26` |
+| `borda` | `#1E2A38` |
+| `texto` | `#F7FAFC` |
+| `texto-secundario` | `#A0AEC0` |
+| `accent` | `#3DF2E0` |
+
+Definidos em [`src/identidade/cores.ts`](src/identidade/cores.ts) e espelhados em
+[`src/app/globals.css`](src/app/globals.css) (`@theme inline`).
+
 ## Roadmap
 
 - Persistir últimas gerações em `localStorage`.
 - Compartilhar uma imagem via URL com estado serializado.
-- Mais templates (carrossel multipage, capa de live, thumbnail de YouTube).
+- Slides internos do carrossel (numeração 02/06, 03/06...).
 - Upload de imagem/ícone em templates que comportem.
 - Tema claro alternativo.
 - Testes (Vitest + Playwright para o fluxo de exportação).

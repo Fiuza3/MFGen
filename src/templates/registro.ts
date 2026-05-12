@@ -6,6 +6,8 @@ import { CodeBlock } from "./code-block/CodeBlock";
 import { metaCodeBlock } from "./code-block/meta";
 import { CommitCard } from "./commit/CommitCard";
 import { metaCommit } from "./commit/meta";
+import { FeedTrio } from "./feed-trio/FeedTrio";
+import { metaFeedTrio } from "./feed-trio/meta";
 import { Marca } from "./marca/Marca";
 import { metaMarca } from "./marca/meta";
 import { PostInstagram } from "./post-instagram/PostInstagram";
@@ -24,6 +26,7 @@ export const templates: readonly EntradaRegistro[] = [
   { meta: metaMarca, Componente: Marca },
   { meta: metaPostInstagram, Componente: PostInstagram },
   { meta: metaStoryReels, Componente: StoryReels },
+  { meta: metaFeedTrio, Componente: FeedTrio },
   { meta: metaAnuncioOlx, Componente: AnuncioOlx },
   { meta: metaCarrosselCapa, Componente: CarrosselCapa },
   { meta: metaTerminal, Componente: Terminal },

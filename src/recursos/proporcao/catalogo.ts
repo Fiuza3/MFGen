@@ -31,6 +31,12 @@ export const proporcoes: readonly Proporcao[] = [
     descricao: "Cartão vertical",
     dimensaoPadrao: { largura: 1080, altura: 1440 },
   },
+  {
+    id: "feed-trio",
+    rotulo: "3:1",
+    descricao: "Trio de posts sincronizados no feed",
+    dimensaoPadrao: { largura: 3240, altura: 1080 },
+  },
 ] as const;
 
 export const PROPORCAO_PADRAO = proporcoes[0];

@@ -3,7 +3,7 @@ const MENSAGEM_WHATSAPP = encodeURIComponent(
   "Oi Marcus! Vi o MFgen e quero um site no estilo da minha empresa.",
 );
 
-const TELEFONE_WHATSAPP = "5519972379038";
+const TELEFONE_WHATSAPP = "5531972379038";
 
 export const links = {
   github: {
@@ -23,7 +23,7 @@ export const links = {
   },
   whatsapp: {
     rotulo: "WhatsApp",
-    handle: "(19) 97237-9038",
+    handle: "(31) 97237-9038",
     href: `https://wa.me/${TELEFONE_WHATSAPP}?text=${MENSAGEM_WHATSAPP}`,
   },
 } as const;

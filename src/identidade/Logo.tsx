@@ -15,9 +15,9 @@ type LogoProps = {
 
 // Metrics do Geist Mono no fontSize 22, extraídas do logo do site.
 // Mantidos como ratio para escalar em qualquer tamanho.
-const RATIO_AVANCO = 13.2 / 22;
-const RATIO_ALTURA = 30 / 22;
-const RATIO_PADDING = 1 / 22;
+export const RATIO_AVANCO_LOGO = 13.2 / 22;
+export const RATIO_ALTURA_LOGO = 30 / 22;
+export const RATIO_PADDING_LOGO = 1 / 22;
 
 export function Logo({
   tamanho = 24,
@@ -26,9 +26,9 @@ export function Logo({
   compacto = false,
   className,
 }: LogoProps) {
-  const cw = tamanho * RATIO_AVANCO;
-  const altura = tamanho * RATIO_ALTURA;
-  const padX = tamanho * RATIO_PADDING;
+  const cw = tamanho * RATIO_AVANCO_LOGO;
+  const altura = tamanho * RATIO_ALTURA_LOGO;
+  const padX = tamanho * RATIO_PADDING_LOGO;
   const larguraTotal = padX + cw * 5;
   const opColchetes = opacidadeColchetes ?? (compacto ? 0.28 : 0.58);
 
